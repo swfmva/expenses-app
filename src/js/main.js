@@ -12,7 +12,7 @@ function drawLine(ctx, startX, startY, endX, endY){
 function drawArc(ctx, centerX, centerY, radius, startAngle, endAngle){
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius, startAngle, endAngle);
-    ctx.strokeStyle = '#474787';
+    ctx.strokeStyle = '#2c2c54';
     ctx.lineWidth=12;
     ctx.stroke();
 }
@@ -23,17 +23,19 @@ function drawPieSlice(ctx,centerX, centerY, radius, startAngle, endAngle, color 
     ctx.arc(centerX, centerY, radius, startAngle, endAngle);
     ctx.closePath();
     ctx.fill();
-    ctx.strokeStyle = '#474787';
+    ctx.strokeStyle = '#2c2c54';
     ctx.lineWidth=6;
     ctx.stroke();
    
 }
 var myVinyls =
 {
-    "Classical music": 1,
-    "Alternative rock": 2,
-    "Pop": 3,
-    "Jazz": 4
+    "Food": 1,
+    "Clothes": 2,
+    "Relaxation": 3,
+    "Fuel": 4,
+    "Services": 4,
+    "House": 4
 }
 
 var Piechart = function(options){
@@ -84,18 +86,18 @@ var Piechart = function(options){
             ctx.fillStyle = "#2c2c54";
             ctx.fill();
         }
-        var labelText = "MAY 2018";
-        this.ctx.fillStyle = "white";
-        this.ctx.font = "bold 20px Arial";
-        var textWidth = ctx.measureText(labelText);
-        this.ctx.fillText(labelText, this.canvas.width/2 - ctx.measureText(labelText).width/2, this.canvas.height/2-20);
-        var labelText = "Total amount: 203Ron";
-        this.ctx.fillStyle = "white";
-        this.ctx.font = "16px Arial";
-        var textWidth = ctx.measureText(labelText);
-        this.ctx.fillText(labelText, this.canvas.width/2 - ctx.measureText(labelText).width/2, this.canvas.height/2+20);
+        // var labelText = "MAY 2018";
+        // this.ctx.fillStyle = "white";
+        // this.ctx.font = "bold 20px Arial";
+        // var textWidth = ctx.measureText(labelText);
+        // this.ctx.fillText(labelText, this.canvas.width/2 - ctx.measureText(labelText).width/2, this.canvas.height/2-20);
+        // var labelText = "Total amount: 203Ron";
+        // this.ctx.fillStyle = "white";
+        // this.ctx.font = "16px Arial";
+        // var textWidth = ctx.measureText(labelText);
+        // this.ctx.fillText(labelText, this.canvas.width/2 - ctx.measureText(labelText).width/2, this.canvas.height/2+20);
       
-        console.log(textWidth);
+        //console.log(textWidth);
  
         
     }
@@ -104,11 +106,26 @@ var myPiechart = new Piechart(
     {
         canvas:myCanvas,
         data:myVinyls,
-        colors:["#fde23e","#f16e23", "#57d9ff","#937e88"],
-        doughnutHoleSize:.7
-        //doughnutHoleSize:0
+        colors:["#feca57","#ff6b6b", "#48dbfb","#1dd1a1","#ff9ff3","#c8d6e5"],
+        //doughnutHoleSize:.7
+        doughnutHoleSize:0
     }
 );
 console.log(myVinyls)
 
 myPiechart.draw();
+
+// var buttonNames =
+// [
+//     {name:"Food", color:"#feca57"},
+//     {name:"Clothes", color:"#ff6b6b"},
+//     {name:"Relaxation", color:"#48dbfb"},
+//     {name:"Fuel", color:"#1dd1a1"},
+//     {name:"Services", color:"#ff9ff3"},
+//     {name:"House", color:"#c8d6e5"}
+// ]
+// var buttons = document.getElementsByClassName("btnCategory");
+// console.log(buttons);
+// for (i = 0; i < buttons.length; i++) {
+//     buttons[i].innerHTML = buttonNames[i].name;
+// }

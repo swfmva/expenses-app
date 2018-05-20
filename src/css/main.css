@@ -8,7 +8,6 @@ body {
 ul {
     list-style-type: none;
     width:80%;
-    margin:0 ;
     padding:0;    
     margin:auto;
 }
@@ -24,11 +23,13 @@ li {
     padding: 6px 0;
     border-style: solid;
     border-color:  #474787;
+    cursor: pointer;
 }
 
 li:hover {
     background-color: #474787;
 }
+
 
 li.left {
     border-top-left-radius: 8px;
@@ -65,6 +66,16 @@ li.right {
 {
     position:relative;
     width:80%;
-    margin: 0 10%;
+    margin: 10% 10%;
 }
+.cntCategories
+{
+    width:100%;
+    position: absolute;
+    left:0;
+    bottom: 10px;
+    padding:0;
+    cursor: pointer;
+}
+
 
