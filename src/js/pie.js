@@ -23,13 +23,13 @@ function Piechart (options){
         var total_value = 0;
         var color_index = 0;
         for (var categ in this.options.data){
-            var val = this.options.data[categ];
+            var val = this.options.data[categ].amount;
             total_value += val;
         }
  
         var start_angle = 0;
         for (categ in this.options.data){
-            val = this.options.data[categ];
+            val = this.options.data[categ].amount;
             var slice_angle = 2 * Math.PI * val / total_value;
  
             drawPieSlice(
