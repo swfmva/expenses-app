@@ -1,12 +1,13 @@
 @charset "UTF-8";
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #403e53;
+    background-color: #403e53;    
+    font-weight: 100;
 }
 
 ul
 {
-    list-style-type: none;   
+    list-style-type: none;  
 }
 .reportType {    
     width:80%;
@@ -46,34 +47,17 @@ li:hover {
     border-bottom-right-radius: 8px;    
     border-width: 2px 2px 2px 0px;
 }
-
-.currentDay {
-    width:100%;
-    height:40px;
-    color: #f7f1e3;
-    padding: 60px 0 10px 0;
-    font-size:24px;
-    text-align: center;
-}
-.expenses
-{
-    width:100%;
-    height:40px;
-    padding: 0 0 10px 0;
-    color: #a2bdf0;
-    font-size:16px;
-    text-align: center;
-}
 #myCanvas
 {
     position:relative;
-    width:80%;
-    margin: 0 10%
+    width:70%;
+    margin: 12% 15%;
 }
 .listCategory
 {
     width:100%; 
     padding:0;
+    height:322px;
     margin:0;  
 }
 
@@ -83,7 +67,7 @@ li:hover {
     position: relative;
     width:100%;
     height:50px;
-    margin:1.5px 0;
+    margin:2px 0;
     background-color: #323043;
     text-indent: 14px;
     color:#fff;
@@ -91,16 +75,27 @@ li:hover {
 }
 .progress
 {
-    width:100%;
-    height:100%;
-    margin:0;
-    padding:0;
     float:left;
     position: relative;
+    width:100%;
+    height:50px;
+    margin:0;
+    padding:auto 0;
     background-color:#fff000;
+    line-height: 50px;    
+}
+.expenses
+{
+    width:140px;
+    left:calc(100% - 140px - 8px);
+    position: absolute;
+    text-align: right;
+    z-index:99;
 }
 .label
 {
+    width:50px;
+    left:calc(100% - 230px);
     float:left;
     position: absolute;
     z-index: 99;

@@ -5,12 +5,12 @@ var month = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE",
 var totalExpensesSum = 20;
 var myVinyls =
 {
-    "Food":1,
-    "Clothes": 2,
-    "Relaxation":3,
-    "Fuel": 4,
-    "Services": 5,
-    "House": 0
+    "Food":35.3,
+    "Clothes": 69.78,
+    "Relaxation":310.30,
+    "Fuel": 120.65,
+    "Services": 150.10,
+    "House": 86.3
 }
 
 function Piechart (options){
@@ -68,19 +68,19 @@ function Piechart (options){
 
         var monthText = month[monthNumber];
         var yearText = currentDate.getFullYear();
-        var expensesText = "Total: " + total_value + "RON";
+        var expensesText = Math.floor(total_value) + " RON";
 
         this.ctx.font = "normal 60px Arial";
         var yearWidth = this.ctx.measureText(yearText).width;
-        this.ctx.fillText(yearText, this.canvas.width/2 - yearWidth/2,this.canvas.height/2-60);
+        this.ctx.fillText(yearText, this.canvas.width/2 - yearWidth/2,this.canvas.height/2-40);
 
         this.ctx.font = "normal 40px Arial";
         var monthWidth = this.ctx.measureText(monthText).width;
-        this.ctx.fillText(monthText, this.canvas.width/2 - monthWidth/2,this.canvas.height/2-10);
+        this.ctx.fillText(monthText, this.canvas.width/2 - monthWidth/2,this.canvas.height/2+4);
 
-        this.ctx.font = "normal 30px Arial";
+        this.ctx.font = "normal 45px Arial";
         var expensesWidth = this.ctx.measureText(expensesText).width;    
-        this.ctx.fillText(expensesText, this.canvas.width/2 - expensesWidth/2,this.canvas.height/2+60);
+        this.ctx.fillText(expensesText, this.canvas.width/2 - expensesWidth/2,this.canvas.height/2+80);
         
     }
 }
@@ -101,8 +101,6 @@ function drawPieSlice(ctx,centerX, centerY, radius, startAngle, endAngle, color 
     ctx.fill();    
     ctx.strokeStyle = '#403e53'; 
     ctx.lineWidth=5;
-    ctx.stroke();
-    
-   
+    ctx.stroke();   
 }
 
