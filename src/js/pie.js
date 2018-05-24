@@ -58,12 +58,12 @@ function Piechart (options){
                 2 * Math.PI
             );
             
-            ctx.fillStyle = "#403e53";
+            ctx.fillStyle = "#dfe6e9";
             ctx.fill();
         }
 
 
-        this.ctx.fillStyle = "white";
+        this.ctx.fillStyle = "#2d3436";
         var monthNumber = 8;
 
         var monthText = month[monthNumber];
@@ -88,7 +88,7 @@ function Piechart (options){
 function drawArc(ctx, centerX, centerY, radius, startAngle, endAngle){
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius, startAngle, endAngle);
-    ctx.strokeStyle = '#403e53'; 
+    ctx.strokeStyle = '#dfe6e9'; 
     ctx.lineWidth=10;
     ctx.stroke();
 }
@@ -99,7 +99,7 @@ function drawPieSlice(ctx,centerX, centerY, radius, startAngle, endAngle, color 
     ctx.arc(centerX, centerY, radius, startAngle, endAngle);    
     ctx.closePath();
     ctx.fill();    
-    ctx.strokeStyle = '#403e53'; 
+    ctx.strokeStyle = '#dfe6e9'; 
     ctx.lineWidth=5;
     ctx.stroke();   
 }

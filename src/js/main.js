@@ -2,24 +2,18 @@ var data = localStorage.getItem("expensesApp")
   ? JSON.parse(localStorage.getItem("expensesApp"))
   : {
       totalExpenses:595.96
-      ,categoryList:
-      [
-         {name:"Food", color:"#519fc6", amount:103}
-        ,{name:"Clothes", color:"#a36acb",  amount:120.65}
-        ,{name:"Relaxation", color:"#e55789", amount:50.95}
-        ,{name:"Fuel", color:"#1dd1a1", amount:260.80}
-        ,{name:"Services", color:"#d5a32a", amount:34}
-        ,{name:"House", color:"#6eb239", amount:26.56}      
-      ]
+      ,firstInput:true
       ,dailyList:
       [
         [//array of a single day
-          {name:"Food", amount:1}
-          ,{name:"Clothes",  amount:2}
-          ,{name:"Relaxation", amount:3}
-          ,{name:"Fuel", amount:4}
-          ,{name:"Services", amount:5}        
-          ,{name:"House", amount:6}
+          {name:"Food", amount:5}
+          ,{name:"Clothes",  amount:1}
+          ,{name:"Leasure", amount:1}
+          ,{name:"Transporation", amount:1}
+          ,{name:"Entertainment", amount:1}  
+          ,{name:"Vehicle", amount:1}      
+          ,{name:"Housing", amount:1}       
+          ,{name:"Taxes", amount:1}    
         ]
       ]
       ,detailedList:
@@ -34,38 +28,68 @@ var data = localStorage.getItem("expensesApp")
       ]      
     };
 
+
+var myCanvas;
+var ctx;
+var cntReportForm = document.getElementById("cntReportForm");
 //console.log(data);
-
-const myCanvas = document.getElementById("myCanvas");
-myCanvas.width = 400;
-myCanvas.height = 400;
-const ctx = myCanvas.getContext("2d");
-
-
+var categoryList =  
+[
+   {name:"Food", color:"#F4B350", amount:103}
+  ,{name:"Clothes", color:"#EC644B",  amount:120.65}
+  ,{name:"Leasure", color:"#E08283", amount:50.95}
+  ,{name:"Transporation", color:"#BE90D4", amount:260.80}
+  ,{name:"Entertainment", color:"#52B3D9", amount:34}
+  ,{name:"Vehicle", color:"#4ECDC4", amount:22}  
+  ,{name:"Housing", color:"#87D37C", amount:26.56}  
+  ,{name:"Taxes", color:"#00B16A", amount:34}    
+]
 //
 const DAY_PIE = 0; 
 const WEEK_PIE = 1; 
 const MONTH_PIE = 2; 
 //
 
+var firstInput = data.firstInput;
 var totalAmountByType = 0;
 var totalEverExpenses = data.totalExpenses;
 var briefDailyList = data.dailyList[data.dailyList.length-1];
-var categoryList = data.categoryList;
 var listProgressArray = [];
+
+var btnNewEntry = document.getElementById("addNewEntry");
+btnNewEntry.addEventListener("mousedown", openEntryForm)
 
 // console.log("TOTAL EXPENSES EVER =>> ", totalEverExpenses);
 // console.log("CATEGORIES =>> ", categoryList);
 // console.log("BRIEF DAILY LIST =>> ", briefDailyList);
 
+
 createPieChart(0);
 createGenericTabs(0);
 
+function openEntryForm()
+{
+  console.log("Entry Form open true");
+  cntReportForm.style.display = "none";
+  cntEntryForm.style.display = "block";
+}
 
 
 //
 function createGenericTabs(type) {
 
+  var list = document.getElementById("listCategory");
+  var noExpenses = document.createElement("p");
+
+  if(firstInput == false)
+  {
+    console.log("no Inputs added yet");
+    
+    noExpenses.classList.add("noExpenses");
+    noExpenses.innerHTML = "No expenses have yet been added"
+    list.appendChild(noExpenses);
+    return 0 ;
+  }
   if(type == DAY_PIE)// brief list of daily category
   {
 
@@ -77,10 +101,17 @@ function createGenericTabs(type) {
   }
 
   // console.log("totalAmountByType = ", totalAmountByType);
-  var list = document.getElementById("listCategory");
+  
 
   for(let i = 0; i<briefDailyList.length ;i ++)
   {
+    //var noExpenses = document.getElementsByClassName("noExpenses");
+    if(list.childNodes[0] === noExpenses)
+    { 
+      console.log(list.childNodes[0])
+      list.removeChild(noExpenses);
+    }
+    
     let bgCategory = document.createElement("div");
     let progress = document.createElement("div");
     let label = document.createElement("p");
@@ -160,13 +191,21 @@ function getAllColors(arr1, arr2)
 //
 function createPieChart(type)
 {
+  myCanvas= document.getElementById("myCanvas");
+  myCanvas.width = 400;
+  myCanvas.height = 400;
+  ctx = myCanvas.getContext("2d");
+
   let c = getAllColors(briefDailyList, categoryList)
-  var myPiechart = new Piechart({
-    canvas: myCanvas,
-    data: briefDailyList,
-    colors: c,
-    doughnutHoleSize: 0.8
-    //doughnutHoleSize: 0
-  });
+  var myPiechart = new Piechart
+  (
+    {
+      canvas: myCanvas,
+      data: briefDailyList,
+      colors: c,
+      doughnutHoleSize: 0.8
+      //doughnutHoleSize: 0
+    }
+  );
   myPiechart.draw();
 }

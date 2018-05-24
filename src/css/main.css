@@ -1,7 +1,7 @@
 @charset "UTF-8";
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #403e53;    
+    background-color: #dfe6e9;    
     font-weight: 100;
 }
 
@@ -9,43 +9,38 @@ ul
 {
     list-style-type: none;  
 }
+
 .reportType {    
-    width:80%;
+    width:100%;
     padding:0;    
     margin:auto;
 }
 
 .reportButton {
     float: left;
-    width: calc(100% / 3 - 3px);
-    background-color: #403e53;
-    color: #a2bdf0;
+    width: calc(100% / 4 - 2px);
+    height:50px;
+    background-color: #fff;
+    color: #6C7A89;
     text-align: center;
-    text-decoration: none;
+    line-height:50px;
     font-size: 16px;
-    padding: 6px 0;
+    padding: auto 0;    
     border-style: solid;
-    border-color:  #504e66;
+    border-color:  #c4cdd1;
     cursor: pointer;
+    box-shadow: 0px 3px 2px rgba(44, 62, 80, 0.10);
 }
 
-li:hover {
-    background-color: #504e66;
+.reportButton:hover {
+    background-color: #c4cdd1;
 }
 
-
-.left {
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;    
-    border-width: 2px 0px 2px 2px;
+.left {   
+    border-width: 0 2px 0  0;
 }
-.middle {  
-    border-width: 2px;
-}
-.right {
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;    
-    border-width: 2px 2px 2px 0px;
+.right {  
+    border-width: 0;
 }
 #myCanvas
 {
@@ -53,12 +48,25 @@ li:hover {
     width:70%;
     margin: 12% 15%;
 }
+.addNewEntry
+{
+    width:calc(100% - 12px);
+    height:60px;
+    background-color:#fff;
+    float:left;    
+    left:6px;
+    text-align: center;
+    line-height: 60px;
+    top:calc(100% - 58px);
+    position: fixed;
+    z-index: 999;
+    cursor:pointer;
+}
 .listCategory
 {
     width:100%; 
     padding:0;
-    height:322px;
-    margin:0;  
+    height:auto;
 }
 
 .bgCategory
@@ -67,11 +75,11 @@ li:hover {
     position: relative;
     width:100%;
     height:50px;
-    margin:2px 0;
-    background-color: #323043;
+    margin:4px 0;
+    background-color: #c4cdd1;
     text-indent: 14px;
     color:#fff;
-
+    box-shadow: 0px 3px 2px rgba(44, 62, 80, 0.20);
 }
 .progress
 {
@@ -81,8 +89,7 @@ li:hover {
     height:50px;
     margin:0;
     padding:auto 0;
-    background-color:#fff000;
-    line-height: 50px;    
+    line-height: 50px;     
 }
 .expenses
 {
@@ -99,5 +106,71 @@ li:hover {
     float:left;
     position: absolute;
     z-index: 99;
+}
+.noExpenses
+{
+    width: 100%;
+    float:left;
+    text-align: center;
+    position: relative;
+}
+
+
+
+
+.cntEntryForm
+{
+    display: none;
+}
+.cntInput
+{
+    width:100%;
+    height:210px;
+    background-color:#fff;    
+    box-shadow: 0px 3px 2px rgba(44, 62, 80, 0.10);
+}
+.inputExpenses
+{
+    width:76%;
+    height:100%;
+    font-size: 60px;
+    background-color: transparent;
+    border: none;
+    text-align: right;
+    outline: none;
+}
+.currencyText
+{
+    width:19%;
+    float:right;
+    text-align: right;
+    line-height: 100%;
+    padding : 25% 16px 0 0;
+    margin:0;
+    position: relative;
+    font-size: 30px;
+    color:#6C7A89;
+    
+}
+
+.cntNumbers
+{
+    width:100%;
+    height:300px;
+    margin:6px 0 0 0;
+}
+.number
+{
+    float:left;
+    position: relative;
+    width:26%;
+    text-align: center;
+    line-height: 100px;
+    font-size: 30px;
+    height:100px;
+    margin:2px;
+    border-radius: 4px;
+    background-color: #aaa;
+    cursor: pointer;
 }
 

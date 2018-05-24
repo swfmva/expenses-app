@@ -12,17 +12,45 @@
 
 <body>
 
-    <header>
+    <div class="cntReportForm" id="cntReportForm">
         <ul class="reportType">
-            <li class="reportButton left">Today</li>
-            <li class="reportButton middle">Month</li>
-            <li class="reportButton right">Year</li>
+            <li class="reportButton left">Day</li>
+            <li class="reportButton left">Week</li>
+            <li class="reportButton left">Month</li>
+            <li class="reportButton right">Total</li>
         </ul>
-    </header>
 
-    <canvas id="myCanvas"></canvas>
 
-    <ul class="listCategory" id = "listCategory"></ul>
+        <canvas id="myCanvas"></canvas>
+
+        <ul class="listCategory" id="listCategory"></ul>
+
+        <footer>
+            <div class="addNewEntry" id="addNewEntry">+</div>
+        </footer>
+    </div>
+    <div class="cntEntryForm" id="cntEntryForm">
+        <div class = "cntInput">
+            <input class="inputExpenses" type="text" placeholder="- 0">
+            <p class="currencyText" >RON</p>
+
+            <div class="cntNumbers">
+                <div class="number">7</div> 
+                <div class="number">8</div> 
+                <div class="number">9</div> 
+                <div class="number">4</div> 
+                <div class="number">5</div> 
+                <div class="number">6</div> 
+                <div class="number">1</div> 
+                <div class="number">2</div> 
+                <div class="number">3</div> 
+                <div class="number">.</div> 
+                <div class="number">0</div> 
+                <div class="number">|&#8592</div> 
+            </div>
+
+        </div>
+    </div>
 
     <script src="src/js/pie.js" type="text/javascript"></script>
     <script src="src/js/main.js" type="text/javascript"></script>
