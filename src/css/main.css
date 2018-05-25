@@ -50,16 +50,20 @@ ul
 }
 .addNewEntry
 {
-    width:calc(100% - 12px);
-    height:60px;
-    background-color:#fff;
-    float:left;    
-    left:6px;
+    width:50px;
+    height:50px;
+    background-color:rgb(38, 49, 107);
     text-align: center;
-    line-height: 60px;
-    top:calc(100% - 58px);
+    font-size:22px;
+    color:#fff;
+    font-weight: 100;
+    line-height: 50px;
+    top:calc(100% - 56px);
+    left:calc(100% - 56px);
+    z-index: 999;    
+    float:right;        
     position: fixed;
-    z-index: 999;
+    border-radius: 25px;
     cursor:pointer;
 }
 .listCategory
@@ -122,22 +126,51 @@ ul
 {
     display: none;
 }
+.navBar
+{
+    width:100%;
+    height:60px;
+    background-color:#fff;
+    margin:-60px 0 8px -8px;
+    position:fixed;
+    box-shadow: 0px 3px 2px rgba(44, 62, 80, 0.10);
+    z-index: 99;
+}
+.btnClose, .btnConfirm
+{
+    width:60px;
+    height:60px;
+    background-color: rgba(44, 62, 80, 0.05);
+    position: relative;
+    border:none;
+    outline:none;
+    cursor: pointer;
+}
+.btnConfirm
+{
+    float: right;
+}
 .cntInput
 {
     width:100%;
-    height:210px;
+    height:130px;
     background-color:#fff;    
-    box-shadow: 0px 3px 2px rgba(44, 62, 80, 0.10);
+    box-shadow: 0px 3px 2px rgba(44, 62, 80, 0.10);    
+    margin-top:60px;
 }
 .inputExpenses
 {
-    width:76%;
-    height:100%;
+    width:74%;
+    height:74%;
     font-size: 60px;
     background-color: transparent;
     border: none;
     text-align: right;
     outline: none;
+    margin:0;
+    padding:9% 0 0 0;
+    float:left;
+    color:#6C7A89;
 }
 .currencyText
 {
@@ -145,7 +178,7 @@ ul
     float:right;
     text-align: right;
     line-height: 100%;
-    padding : 25% 16px 0 0;
+    padding : 19% 16px 0 0;
     margin:0;
     position: relative;
     font-size: 30px;
@@ -159,18 +192,20 @@ ul
     height:300px;
     margin:6px 0 0 0;
 }
-.number
+.keyNum
 {
     float:left;
     position: relative;
-    width:26%;
+    width:32%;
     text-align: center;
-    line-height: 100px;
+    line-height: 60px;
     font-size: 30px;
-    height:100px;
+    height:60px;
     margin:2px;
     border-radius: 4px;
-    background-color: #aaa;
+    background-color:transparent;
+    border:none;
     cursor: pointer;
+    outline: none;
 }
 

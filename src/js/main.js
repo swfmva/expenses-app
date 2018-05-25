@@ -57,7 +57,25 @@ var briefDailyList = data.dailyList[data.dailyList.length-1];
 var listProgressArray = [];
 
 var btnNewEntry = document.getElementById("addNewEntry");
-btnNewEntry.addEventListener("mousedown", openEntryForm)
+var btnClose = document.getElementById("btnClose");
+var btnConfirm = document.getElementById("btnConfirm");
+btnNewEntry.addEventListener("mousedown", openEntryForm);
+btnClose.addEventListener("mousedown", closeEntryForm);
+btnConfirm.addEventListener("mousedown", updateReport);
+
+var keyPad = new Calculator();
+
+function updateReport()
+{
+  closeEntryForm();
+}
+function closeEntryForm()
+{
+  console.log("Entry Form open true");
+  cntReportForm.style.display = "block";
+  cntEntryForm.style.display = "none";
+  inputExpenses.innerHTML = "0";
+}
 
 // console.log("TOTAL EXPENSES EVER =>> ", totalEverExpenses);
 // console.log("CATEGORIES =>> ", categoryList);
@@ -71,7 +89,7 @@ function openEntryForm()
 {
   console.log("Entry Form open true");
   cntReportForm.style.display = "none";
-  cntEntryForm.style.display = "block";
+  cntEntryForm.style.display = "block";  
 }
 
 
