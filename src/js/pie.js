@@ -1,7 +1,8 @@
 var currentDate = new Date();
 var month = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE",
             "JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
-
+var emptyArray = false;
+var slices = 0;
 var totalExpensesSum = 20;
 var myVinyls =
 {
@@ -18,20 +19,32 @@ function Piechart (options){
     this.canvas = options.canvas;
     this.ctx = this.canvas.getContext("2d");
     this.colors = options.colors;
- 
+    if(this.options.data[0].name == "NONE")
+        emptyArray = true;
+    else 
+        emptyArray = false;
+
     this.draw = function(){
         var total_value = 0;
         var color_index = 0;
-        for (var categ in this.options.data){
-            var val = this.options.data[categ].amount;
-            total_value += val;
+        if(emptyArray)
+        {
+            total_value = 1;
         }
- 
+        else
+        {
+            for (var categ in this.options.data){
+                var val = this.options.data[categ].amount;
+                total_value += val;
+            }
+        }
+        slices = 0;
         var start_angle = 0;
         for (categ in this.options.data){
-            val = this.options.data[categ].amount;
+            slices ++ ;
+            val = (emptyArray)? 1:this.options.data[categ].amount;
             var slice_angle = 2 * Math.PI * val / total_value;
- 
+            console.log(slices);
             drawPieSlice(
                 this.ctx,
                 this.canvas.width/2,
@@ -68,7 +81,7 @@ function Piechart (options){
 
         var monthText = month[monthNumber];
         var yearText = currentDate.getFullYear();
-        var expensesText = Math.floor(total_value) + " RON";
+        var expensesText = (emptyArray)?("0 RON"):(Math.floor(total_value) + " RON");
 
         this.ctx.font = "normal 60px Arial";
         var yearWidth = this.ctx.measureText(yearText).width;
@@ -101,6 +114,7 @@ function drawPieSlice(ctx,centerX, centerY, radius, startAngle, endAngle, color 
     ctx.fill();    
     ctx.strokeStyle = '#dfe6e9'; 
     ctx.lineWidth=5;
-    ctx.stroke();   
+    if(!emptyArray && slices > 1)
+        ctx.stroke();   
 }
 
