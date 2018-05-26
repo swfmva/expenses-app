@@ -123,7 +123,7 @@ ul
 .label
 {
     width:50px;
-    left:calc(100% - 230px);
+    left:calc(100% - 180px);
     float:left;
     position: absolute;
     z-index: 99;

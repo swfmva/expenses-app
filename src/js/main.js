@@ -101,7 +101,7 @@ function createGenericTabs(type)
     console.log("no Inputs added yet");
 
     noExpenses.classList.add("noExpenses");
-    noExpenses.innerHTML = "No expenses have yet been added";
+    noExpenses.innerHTML = "No expenses have yet been added for today.<BR> Keep it up :D";
     list.appendChild(noExpenses);
     return 0;
   }
