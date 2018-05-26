@@ -3,16 +3,6 @@ var month = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE",
             "JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
 var emptyArray = false;
 var slices = 0;
-var totalExpensesSum = 20;
-var myVinyls =
-{
-    "Food":35.3,
-    "Clothes": 69.78,
-    "Relaxation":310.30,
-    "Fuel": 120.65,
-    "Services": 150.10,
-    "House": 86.3
-}
 
 function Piechart (options){
     this.options = options;
@@ -44,7 +34,6 @@ function Piechart (options){
             slices ++ ;
             val = (emptyArray)? 1:this.options.data[categ].amount;
             var slice_angle = 2 * Math.PI * val / total_value;
-            console.log(slices);
             drawPieSlice(
                 this.ctx,
                 this.canvas.width/2,
@@ -77,23 +66,24 @@ function Piechart (options){
 
 
         this.ctx.fillStyle = "#2d3436";
-        var monthNumber = 8;
+        var dayNumber = currentDate.getDate();
+        var monthNumber = currentDate.getMonth();
 
-        var monthText = month[monthNumber];
+        var monthText = month[monthNumber].substring(0,3);
         var yearText = currentDate.getFullYear();
-        var expensesText = (emptyArray)?("0 RON"):(Math.floor(total_value) + " RON");
+        var expensesText = (emptyArray)?("0"):(Math.floor(total_value));
 
-        this.ctx.font = "normal 60px Arial";
-        var yearWidth = this.ctx.measureText(yearText).width;
-        this.ctx.fillText(yearText, this.canvas.width/2 - yearWidth/2,this.canvas.height/2-40);
+        this.ctx.font = "40px Roboto";
+        var monthWidth = this.ctx.measureText(dayNumber + " " + monthText + " " + yearText).width;
+        this.ctx.fillText(dayNumber + " " + monthText + " " + yearText, this.canvas.width/2 - monthWidth/2,this.canvas.height/2-40);
 
-        this.ctx.font = "normal 40px Arial";
-        var monthWidth = this.ctx.measureText(monthText).width;
-        this.ctx.fillText(monthText, this.canvas.width/2 - monthWidth/2,this.canvas.height/2+4);
-
-        this.ctx.font = "normal 45px Arial";
+        this.ctx.font = "70px Roboto";
         var expensesWidth = this.ctx.measureText(expensesText).width;    
-        this.ctx.fillText(expensesText, this.canvas.width/2 - expensesWidth/2,this.canvas.height/2+80);
+        this.ctx.fillText(expensesText, this.canvas.width/2 - expensesWidth/2,this.canvas.height/2+40);
+
+        this.ctx.font = "30px Roboto";
+        var currencyWidth = this.ctx.measureText("RON").width;    
+        this.ctx.fillText("RON", this.canvas.width/2 - currencyWidth/2,this.canvas.height/2+80);
         
     }
 }

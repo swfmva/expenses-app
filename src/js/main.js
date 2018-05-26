@@ -20,10 +20,14 @@ var data = localStorage.getItem("expensesApp")
       ]
     };
 
+
 //declare variables >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-var myCanvas;
-var ctx;
+var myCanvas = document.getElementById("myCanvas");
+myCanvas.width = 400;
+myCanvas.height = 400;
+var ctx = myCanvas.getContext("2d");
 var cntReportForm = document.getElementById("cntReportForm");
+
 //console.log(data);
 var categoryList =
 [
@@ -40,25 +44,30 @@ var categoryList =
 const DAY_PIE = 0;
 const WEEK_PIE = 1;
 const MONTH_PIE = 2;
+const TOTAL = 3;
 //
-
 var firstInput = data.firstInput;
 var totalAmountByType = 0;
 var totalEverExpenses = data.totalExpenses;
-var briefDailyList = data.dailyList[0];
+var briefDailyList;
 var listProgressArray = [];
 
 var btnNewEntry = document.getElementById("addNewEntry");
 var btnClose = document.getElementById("btnClose");
 var btnConfirm = document.getElementById("btnConfirm");
+var btnReportByType = document.getElementsByClassName("reportButton")
 btnNewEntry.addEventListener("mousedown", openEntryForm);
 btnClose.addEventListener("mousedown", closeEntryForm);
 btnConfirm.addEventListener("mousedown", updateReport);
-
+for(let i = 0; i< btnReportByType.length;i++)
+{
+  btnReportByType[i].addEventListener("mousedown", onBtnReportDown);
+}
 var keyPad = new Calculator();
 var dropDownCategories = new AddCategories();
 
 /// end of VAR DECLARATIONS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 
 //
 checkIfDateHasChanged();
@@ -67,6 +76,7 @@ checkIfDateHasChanged();
 createPieChart(0);
 createGenericTabs(0);
 
+//
 function openEntryForm() {
   console.log("Entry Form open true");
   cntReportForm.style.display = "none";
@@ -74,17 +84,19 @@ function openEntryForm() {
 }
 
 //
-function createGenericTabs(type) {
+function createGenericTabs(type)
+{
+
   var list = document.getElementById("listCategory");
   var myNode = document.getElementById("foo");
-  while (list.firstChild) {
+
+  while (list.firstChild)
+  {
     list.removeChild(list.firstChild);
   }
 
   var noExpenses = document.createElement("p");
-  briefDailyList = data.dailyList[0];
-  firstInput = data.firstInput;
-  console.log(" emptyArray = " , emptyArray)
+
   if (firstInput == true || emptyArray == true ) {
     console.log("no Inputs added yet");
 
@@ -93,10 +105,9 @@ function createGenericTabs(type) {
     list.appendChild(noExpenses);
     return 0;
   }
+  
+  firstInput = data.firstInput;
 
-  if (type == DAY_PIE) {
-    // brief list of daily category
-  }
 
   var highestValue = 0;
   totalAmountByType = 0;
@@ -109,8 +120,8 @@ function createGenericTabs(type) {
 
   for (let i = 0; i < briefDailyList.length; i++) {
     //var noExpenses = document.getElementsByClassName("noExpenses");
-    if (list.childNodes[0] === noExpenses) {
-      console.log(list.childNodes[0]);
+    if (list.childNodes[0] === noExpenses)
+    {
       list.removeChild(noExpenses);
     }
 
@@ -166,16 +177,12 @@ function getAllColors(arr) {
   return colors;
 }
 
-console.log(briefDailyList);
+
 //
 function createPieChart(type) {
 
-  myCanvas = document.getElementById("myCanvas");
-  myCanvas.width = 400;
-  myCanvas.height = 400;
-  ctx = myCanvas.getContext("2d");
-
-  briefDailyList = data.dailyList[0];
+  briefDailyList = getListByType(type);
+  
   let colors = getAllColors(briefDailyList);
   if(briefDailyList.length == 0)
   {
@@ -217,6 +224,7 @@ function updateReport() {
     emptyArray = false;
     closeEntryForm();   
     saveData();
+    briefDailyList = getListByType(0);
     colors = getAllColors(briefDailyList);
     var myPiechart = new Piechart({canvas: myCanvas, data: briefDailyList, colors: colors, doughnutHoleSize: 0.8 /*, doughnutHoleSize: 0*/ });
     myPiechart.draw(); 
@@ -262,3 +270,106 @@ function checkIfDateHasChanged()
   }
   console.log(data);
 }
+
+//
+function onBtnReportDown(evt)
+{
+  if(evt.target.innerHTML == "Day")
+  {
+    createPieChart(0);
+    createGenericTabs(0);
+  }
+  if(evt.target.innerHTML == "Week")
+  {
+    createPieChart(1);
+    createGenericTabs(1);
+  }
+  if(evt.target.innerHTML == "Month")
+  {
+    createPieChart(2);
+    createGenericTabs(2);
+  }
+  if(evt.target.innerHTML == "Total")
+  {
+    createPieChart(3);
+    createGenericTabs(3);
+  }
+}
+
+
+//
+function getListByType(type)
+{
+  var tempData = copy(data);
+  if(type == DAY_PIE)
+  {
+    var value = [];
+    for(let i = 0; i< tempData.dailyList[0].length; i++)
+    {
+      value.push(tempData.dailyList[0][i])
+    }   
+  }
+  else 
+  {
+    var days = [6,29,tempData.dailyList.length];
+    var value = [];
+    var tempArr = [];
+    console.log(days[type-1])
+    for(let i = 0; i < days[type-1]; i++)
+    {
+      if(tempData.dailyList[i] != undefined)
+      {
+        for(let j = 0; j < tempData.dailyList[i].length; j++)
+        {
+          tempArr.push(tempData.dailyList[i][j])
+        }
+      }
+    } 
+    
+    while(tempArr.length > 0)
+    {
+      var index = checkDuplicate(tempArr[0], value);
+      if(index == -1)
+      {
+        value.push(tempArr[0]);
+        tempArr.splice(0,1);
+      }
+      else
+      {
+        value[index].amount += tempArr[0].amount;
+        tempArr.splice(0,1);
+      }
+    }
+  }
+  console.log("value = ", value);
+  console.log("dailyList = ", tempData.dailyList)
+  return value;
+}
+
+function checkDuplicate(elem, arr)
+{
+  if(arr.length == 0)
+   return -1;
+  let index; 
+  for(var i = 0; i < arr.length; i++)
+  {
+    if(elem.name == arr[i].name)
+    {
+      index = i;
+      return index;
+    }
+  }
+  return -1;
+}
+
+function copy(o) {
+  var out, v, key;
+  out = Array.isArray(o) ? [] : {};
+  for (key in o) {
+      v = o[key];
+      out[key] = (typeof v === "object" && v !== null) ? copy(v) : v;
+  }
+  return out;
+}
+
+

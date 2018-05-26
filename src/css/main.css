@@ -3,6 +3,10 @@ body {
     font-family: 'Roboto', sans-serif;
     background-color: #dfe6e9;    
     font-weight: 100;
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
 }
 
 ul
@@ -12,27 +16,35 @@ ul
 
 .reportType {    
     width:100%;
+    height:auto;
+    overflow: auto;
     padding:0;    
-    margin:auto;
+    margin:0;
+    left:0;
+    top:0;
+    top:0;
+    float:right;        
+    position: fixed;
 }
 
 .reportButton {
     float: left;
-    width: calc(100% / 4 - 2px);
+    width: calc(100% / 4 - 1.5px);
     height:50px;
     background-color: #fff;
-    color: #6C7A89;
+    color: #aaa;
     text-align: center;
     line-height:50px;
     font-size: 16px;
     padding: auto 0;    
     border-style: solid;
-    border-color:  #c4cdd1;
+    border-color:  rgb(233, 233, 233, .5);
     cursor: pointer;
     box-shadow: 0px 3px 2px rgba(44, 62, 80, 0.10);
 }
 
 .reportButton:hover {
+    color: #000;
     background-color: #c4cdd1;
 }
 
@@ -44,33 +56,28 @@ ul
 }
 #myCanvas
 {
-    position:relative;
+    float:left;
     width:70%;
-    margin: 12% 15%;
+    margin: 20% 15% 12% 15%;
 }
 .addNewEntry
 {
-    width:50px;
+    width:100%;
     height:50px;
-    background-color:rgb(38, 49, 107);
+    background-color:#fff;
     text-align: center;
     font-size:22px;
-    color:#fff;
+    color:#444;
     font-weight: 100;
     line-height: 50px;
-    top:calc(100% - 56px);
-    left:calc(100% - 56px);
+    top:calc(100% - 50px);
+    left:0;
     z-index: 999;    
     float:right;        
     position: fixed;
-    border-radius: 25px;
+    border-radius: 0px;
     cursor:pointer;
-}
-.listCategory
-{
-    width:100%; 
-    padding:0;
-    height:auto;
+    box-shadow: 0px -6px 4px rgba(44, 62, 80, .3);
 }
 
 .bgCategory
@@ -80,12 +87,21 @@ ul
     width:100%;
     height:50px;
     margin:4px 0;
-    background-color: #c4cdd1;
+    background-color: #364952;
     text-indent: 14px;
     color:#fff;
     box-shadow: 0px 3px 2px rgba(44, 62, 80, 0.20);
 }
 
+.listCategory
+{
+    width:100%; 
+    height:auto;
+    overflow:auto;
+    padding:0;
+    margin-bottom:60px;
+    height:auto;
+}
 .progress
 {
     float:left;
