@@ -8,19 +8,19 @@ var data = localStorage.getItem("expensesApp")
       [
         [
           // here we add category name and the expenses 
-          // { name: "Food", amount: 5 },
+          // { month: 4, categoryName: "Food", amount: 5},
         ]
       ],
       detailedList: 
       [
         [
           // here we save a detailed list for every category.
-          // { listName: "Food", name: "patatos", amount: 1 },
+          // { month: 4, categoryName: "Food", name: "patatos", amount: 1 },
         ]
       ]
     };
-
-
+console.log(data);
+var currentMonth = currentDate.getMonth();
 //declare variables >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 var myCanvas = document.getElementById("myCanvas");
 myCanvas.width = 400;
@@ -31,20 +31,20 @@ var cntReportForm = document.getElementById("cntReportForm");
 //console.log(data);
 var categoryList =
 [
-  { name: "Food", color: "#F4B350", amount: 103 },
-  { name: "Clothes", color: "#EC644B", amount: 120.65 },
-  { name: "Leasure", color: "#E08283", amount: 50.95 },
-  { name: "Transporation", color: "#BE90D4", amount: 260.8 },
-  { name: "Entertainment", color: "#52B3D9", amount: 34 },
-  { name: "Vehicle", color: "#4ECDC4", amount: 22 },
-  { name: "Housing", color: "#87D37C", amount: 26.56 },
-  { name: "Taxes", color: "#00B16A", amount: 34 }
+  { categoryName: "Salary", color: "#ff0000"},
+  { categoryName: "Food", color: "#F4B350"},
+  { categoryName: "Clothes", color: "#EC644B"},
+  { categoryName: "Leasure", color: "#E08283"},
+  { categoryName: "Transporation", color: "#BE90D4"},
+  { categoryName: "Entertainment", color: "#52B3D9"},
+  { categoryName: "Vehicle", color: "#4ECDC4"},
+  { categoryName: "Housing", color: "#87D37C"},
+  { categoryName: "Taxes", color: "#00B16A"}
 ];
 //
 const DAY_PIE = 0;
-const WEEK_PIE = 1;
-const MONTH_PIE = 2;
-const TOTAL = 3;
+const MONTH_PIE = 1;
+const TOTAL = 2;
 //
 var firstInput = data.firstInput;
 var totalAmountByType = 0;
@@ -73,9 +73,8 @@ var dropDownCategories = new AddCategories();
 checkIfDateHasChanged();
 
 //
-createPieChart(0);
-createGenericTabs(0);
-
+createPieChart(1);
+createGenericTabs();
 //
 function openEntryForm() {
   console.log("Entry Form open true");
@@ -84,9 +83,8 @@ function openEntryForm() {
 }
 
 //
-function createGenericTabs(type)
+function createGenericTabs()
 {
-
   var list = document.getElementById("listCategory");
   var myNode = document.getElementById("foo");
 
@@ -98,7 +96,7 @@ function createGenericTabs(type)
   var noExpenses = document.createElement("p");
 
   if (firstInput == true || emptyArray == true ) {
-    console.log("no Inputs added yet");
+    console.log("no Inputs added yet", firstInput, emptyArray);
 
     noExpenses.classList.add("noExpenses");
     noExpenses.innerHTML = "No expenses have yet been added for today.<BR> Keep it up :D";
@@ -149,8 +147,8 @@ function createGenericTabs(type)
     if (highestValue <= percent) highestValue = percent;
     // console.log(percent);
     for (let j = 0; j < categoryList.length; j++) {
-      if (briefDailyList[i].name === categoryList[j].name) {
-        progress.innerHTML = briefDailyList[i].name;
+      if (briefDailyList[i].categoryName === categoryList[j].categoryName) {
+        progress.innerHTML = briefDailyList[i].categoryName;
         progress.style.backgroundColor = categoryList[j].color;
         progress.style.width = percent + "%";
         label.innerHTML = percent + "%";
@@ -171,7 +169,7 @@ function getAllColors(arr) {
   let colors = [];
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < categoryList.length; j++) {
-      if (arr[i].name == categoryList[j].name) colors.push(categoryList[j].color);
+      if (arr[i].categoryName == categoryList[j].categoryName) colors.push(categoryList[j].color);
     }
   }
   return colors;
@@ -186,10 +184,12 @@ function createPieChart(type) {
   let colors = getAllColors(briefDailyList);
   if(briefDailyList.length == 0)
   {
-    var myPiechart = new Piechart({canvas: myCanvas, data: [{name:"NONE"}], colors: ["#aaa"], doughnutHoleSize: 0.8 /*, doughnutHoleSize: 0*/ });
+    console.log("lenght = 0");
+    var myPiechart = new Piechart({canvas: myCanvas, data: [{categoryName:"NONE"}], colors: ["#aaa"], doughnutHoleSize: 0.8 /*, doughnutHoleSize: 0*/ });
   }
   else
   {
+    console.log("lenght > 0");
     var myPiechart = new Piechart({canvas: myCanvas, data: briefDailyList, colors: colors, doughnutHoleSize: 0.8 /*, doughnutHoleSize: 0*/ });
   }
   myPiechart.draw();
@@ -198,7 +198,7 @@ function getDuplicateIndex(name)
 {
   for(let i = 0; i < data.dailyList[0].length;i++)
   {
-    if(data.dailyList[0][i].name == name)
+    if(data.dailyList[0][i].categoryName == name && data.dailyList[0][i].month == currentMonth)
     {
       return i;
     }
@@ -213,7 +213,9 @@ function updateReport() {
   {
     if(objIndex == -1)
     {
-      let newEntry = {name:btnCategories.innerHTML, amount:parseFloat(inputExpenses.innerHTML)}
+      
+    console.log(currentMonth);
+      let newEntry = {month:currentMonth, categoryName:btnCategories.innerHTML, amount:parseFloat(inputExpenses.innerHTML)}
       data.dailyList[0].push(newEntry); 
     }
     else
@@ -224,11 +226,11 @@ function updateReport() {
     emptyArray = false;
     closeEntryForm();   
     saveData();
-    briefDailyList = getListByType(0);
+    briefDailyList = getListByType(1);
     colors = getAllColors(briefDailyList);
     var myPiechart = new Piechart({canvas: myCanvas, data: briefDailyList, colors: colors, doughnutHoleSize: 0.8 /*, doughnutHoleSize: 0*/ });
     myPiechart.draw(); 
-    createGenericTabs(0);
+    createGenericTabs();
     btnCategories.innerHTML = "Select Category";
     btnCategories.style.backgroundColor = "#fff";
     btnCategories.style.color = "#6C7A89";
@@ -256,7 +258,10 @@ function checkIfDateHasChanged()
   if(data.firstInput == true)
   {
     data.firstInput = false;
+    firstInput = false;
     saveData();
+    
+    console.log("firstTipe open = " , data);
   }
 
 
@@ -268,7 +273,6 @@ function checkIfDateHasChanged()
     data.dailyList.unshift([]);
     saveData();
   }
-  console.log(data);
 }
 
 //
@@ -277,22 +281,17 @@ function onBtnReportDown(evt)
   if(evt.target.innerHTML == "Day")
   {
     createPieChart(0);
-    createGenericTabs(0);
-  }
-  if(evt.target.innerHTML == "Week")
-  {
-    createPieChart(1);
-    createGenericTabs(1);
+    createGenericTabs();
   }
   if(evt.target.innerHTML == "Month")
   {
-    createPieChart(2);
-    createGenericTabs(2);
+    createPieChart(1);
+    createGenericTabs();
   }
   if(evt.target.innerHTML == "Total")
   {
-    createPieChart(3);
-    createGenericTabs(3);
+    createPieChart(2);
+    createGenericTabs();
   }
 }
 
@@ -301,6 +300,7 @@ function onBtnReportDown(evt)
 function getListByType(type)
 {
   var tempData = copy(data);
+  //console.log("type = ", type);
   if(type == DAY_PIE)
   {
     var value = [];
@@ -311,20 +311,29 @@ function getListByType(type)
   }
   else 
   {
-    var days = [6,29,tempData.dailyList.length];
+    var days = [0,31,tempData.dailyList.length];
     var value = [];
     var tempArr = [];
-    console.log(days[type-1])
-    for(let i = 0; i < days[type-1]; i++)
+    
+    for(let i = 0; i < days[type]; i++)
     {
       if(tempData.dailyList[i] != undefined)
       {
         for(let j = 0; j < tempData.dailyList[i].length; j++)
         {
-          tempArr.push(tempData.dailyList[i][j])
+          if(type == 1 && tempData.dailyList[i][j].month == currentMonth)
+          {
+            tempArr.push(tempData.dailyList[i][j])
+            console.log("month =" ,tempData.dailyList[i][j].month)
+          }
+          else if(type == 2)
+          {
+            tempArr.push(tempData.dailyList[i][j])
+          }
         }
       }
     } 
+    //console.log(tempArr);
     
     while(tempArr.length > 0)
     {
@@ -341,8 +350,10 @@ function getListByType(type)
       }
     }
   }
-  console.log("value = ", value);
-  console.log("dailyList = ", tempData.dailyList)
+
+  value.sort(function(a,b){return b.amount - a.amount});
+  //value.reverse();
+
   return value;
 }
 
@@ -353,7 +364,7 @@ function checkDuplicate(elem, arr)
   let index; 
   for(var i = 0; i < arr.length; i++)
   {
-    if(elem.name == arr[i].name)
+    if(elem.categoryName == arr[i].categoryName)
     {
       index = i;
       return index;

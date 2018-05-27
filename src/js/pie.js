@@ -9,12 +9,16 @@ function Piechart (options){
     this.canvas = options.canvas;
     this.ctx = this.canvas.getContext("2d");
     this.colors = options.colors;
-    if(this.options.data[0].name == "NONE")
+
+    if(this.options.data[0].categoryName == "NONE")
         emptyArray = true;
     else 
         emptyArray = false;
 
+    console.log(" = emptyArray = " , emptyArray)
     this.draw = function(){
+        
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         var total_value = 0;
         var color_index = 0;
         if(emptyArray)
@@ -60,12 +64,12 @@ function Piechart (options){
                 2 * Math.PI
             );
             
-            ctx.fillStyle = "#dfe6e9";
+            ctx.fillStyle = "#403E52";
             ctx.fill();
         }
 
 
-        this.ctx.fillStyle = "#2d3436";
+       
         var dayNumber = currentDate.getDate();
         var monthNumber = currentDate.getMonth();
 
@@ -73,14 +77,17 @@ function Piechart (options){
         var yearText = currentDate.getFullYear();
         var expensesText = (emptyArray)?("0"):(Math.floor(total_value));
 
+        this.ctx.fillStyle = "#aaa";
         this.ctx.font = "40px Roboto";
         var monthWidth = this.ctx.measureText(dayNumber + " " + monthText + " " + yearText).width;
         this.ctx.fillText(dayNumber + " " + monthText + " " + yearText, this.canvas.width/2 - monthWidth/2,this.canvas.height/2-40);
 
+        this.ctx.fillStyle = "#fff";
         this.ctx.font = "70px Roboto";
         var expensesWidth = this.ctx.measureText(expensesText).width;    
         this.ctx.fillText(expensesText, this.canvas.width/2 - expensesWidth/2,this.canvas.height/2+40);
 
+        this.ctx.fillStyle = "#aaa";
         this.ctx.font = "30px Roboto";
         var currencyWidth = this.ctx.measureText("RON").width;    
         this.ctx.fillText("RON", this.canvas.width/2 - currencyWidth/2,this.canvas.height/2+80);
@@ -91,7 +98,7 @@ function Piechart (options){
 function drawArc(ctx, centerX, centerY, radius, startAngle, endAngle){
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius, startAngle, endAngle);
-    ctx.strokeStyle = '#dfe6e9'; 
+    ctx.strokeStyle = '#403E52'; 
     ctx.lineWidth=10;
     ctx.stroke();
 }
@@ -102,7 +109,7 @@ function drawPieSlice(ctx,centerX, centerY, radius, startAngle, endAngle, color 
     ctx.arc(centerX, centerY, radius, startAngle, endAngle);    
     ctx.closePath();
     ctx.fill();    
-    ctx.strokeStyle = '#dfe6e9'; 
+    ctx.strokeStyle = '#403E52'; 
     ctx.lineWidth=5;
     if(!emptyArray && slices > 1)
         ctx.stroke();   

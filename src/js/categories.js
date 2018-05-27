@@ -7,7 +7,7 @@ function AddCategories()
     {
         let catSelector = document.createElement("div");
         catSelector.classList.add("dropDownCategory");
-        catSelector.innerHTML = categoryList[i].name;
+        catSelector.innerHTML = categoryList[i].categoryName;
         catSelector.style.backgroundColor = categoryList[i].color;
         cntCategories.appendChild(catSelector);
     }

@@ -1,8 +1,8 @@
 @charset "UTF-8";
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #dfe6e9;    
-    font-weight: 100;
+    background-color: #403E52;    
+    font-weight: 400;
     -webkit-user-select: none; /* Safari */        
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+/Edge */
@@ -29,23 +29,21 @@ ul
 
 .reportButton {
     float: left;
-    width: calc(100% / 4 - 1.5px);
+    width: calc(100% / 2 - 1px);
     height:50px;
-    background-color: #fff;
+    background-color: #403E52;
     color: #aaa;
     text-align: center;
     line-height:50px;
     font-size: 16px;
     padding: auto 0;    
     border-style: solid;
-    border-color:  rgb(233, 233, 233, .5);
-    cursor: pointer;
-    box-shadow: 0px 3px 2px rgba(44, 62, 80, 0.10);
+    border-color:  #343346;
 }
 
 .reportButton:hover {
-    color: #000;
-    background-color: #c4cdd1;
+    color: #FFF;
+    background-color: #46445A;
 }
 
 .left {   
@@ -57,26 +55,24 @@ ul
 #myCanvas
 {
     float:left;
-    width:70%;
-    margin: 20% 15% 12% 15%;
+    width:60%;
+    margin: 20% 20% 12% 20%;
 }
 .addNewEntry
 {
-    width:100%;
+    width:50px;
     height:50px;
-    background-color:#fff;
+    background-color:#46445A;
     text-align: center;
     font-size:22px;
-    color:#444;
-    font-weight: 100;
+    color:#fff;
     line-height: 50px;
-    top:calc(100% - 50px);
-    left:0;
+    top:calc(100% - 52px);
+    left:calc(100% - 52px);
     z-index: 999;    
     float:right;        
     position: fixed;
     border-radius: 0px;
-    cursor:pointer;
     box-shadow: 0px -6px 4px rgba(44, 62, 80, .3);
 }
 
@@ -86,11 +82,10 @@ ul
     position: relative;
     width:100%;
     height:50px;
-    margin:4px 0;
-    background-color: #364952;
+    margin:1px 0;
+    background-color:   transparent;
     text-indent: 14px;
     color:#fff;
-    box-shadow: 0px 3px 2px rgba(44, 62, 80, 0.20);
 }
 
 .listCategory
@@ -147,17 +142,16 @@ ul
 {
     width:100%;
     height:60px;
-    background-color:#fff;
+    background-color:#403E52;
     margin:-60px 0 8px -8px;
     position:fixed;
-    box-shadow: 0px 3px 2px rgba(44, 62, 80, 0.10);
     z-index: 99;
 }
 .btnClose, .btnConfirm
 {
     width:60px;
     height:60px;
-    background-color: rgba(44, 62, 80, 0.05);
+    background-color:#fff;
     position: relative;
     border:none;
     outline:none;
@@ -171,7 +165,7 @@ ul
 {
     width:100%;
     height:130px;
-    background-color:#fff;    
+    background-color:#46445A;    
     box-shadow: 0px 3px 2px rgba(44, 62, 80, 0.10);    
     margin-top:60px;
 }
@@ -187,7 +181,7 @@ ul
     margin:0;
     padding:9% 0 0 0;
     float:left;
-    color:#6C7A89;
+    color:#fff;
 }
 .currencyText
 {
@@ -209,11 +203,11 @@ ul
     line-height: 50px;
     text-align: center;
     font-size: 24px;
-    background-color:#fff;
+    background-color:#46445A;
     float:left;
+    color:#fff;
     position: relative;
     margin:10px auto 6px auto; 
-    box-shadow: 0px 3px 2px rgba(44, 62, 80, 0.10);  
 }
 .cntCategories
 {
@@ -243,6 +237,7 @@ ul
     border:none;
     cursor: pointer;
     outline: none;
+    color:#fff;
 }
 .dropDownCategory
 {
@@ -250,7 +245,7 @@ ul
     position: relative;
     width:100%;
     height:50px;
-    margin:4px 0;
+    margin:1px 0;
     background-color: #c4cdd1;
     text-align: center;
     line-height: 50px;
