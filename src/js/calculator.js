@@ -2,7 +2,7 @@ var inputExpenses = document.getElementById("inputExpenses");
 var operator = false;
 function Calculator ()
 {
-    let keyNumbers = ["7","8","9","4","5","6","1","7","3",".","0","del"];
+    let keyNumbers = ["1","2","3","4","5","6","7","8","9",".","0","del"];
     let cntNumbers = document.getElementById("cntNumbers");
 
     for(var i = 0; i<keyNumbers.length;i++)
