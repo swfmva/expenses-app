@@ -13,10 +13,7 @@ var data = localStorage.getItem("expensesApp")
       ],
       detailedList: 
       [
-        [
-          // here we save a detailed list for every category.
-          // { month: 4, categoryName: "Food", name: "patatos", amount: 1 },
-        ]
+
       ]
     };
 console.log(data);
@@ -27,6 +24,7 @@ myCanvas.width = 400;
 myCanvas.height = 400;
 var ctx = myCanvas.getContext("2d");
 var cntReportForm = document.getElementById("cntReportForm");
+var cntMainPage = document.getElementById("cntMainPage");
 
 //console.log(data);
 var categoryList =
@@ -45,6 +43,8 @@ var categoryList =
 const DAY_PIE = 0;
 const MONTH_PIE = 1;
 const TOTAL = 2;
+var currentScreen; // 0 = maie, 1 = categoryReport, 2 = detailedReport, 3= entryForm;
+var previousScreen;
 //
 var firstInput = data.firstInput;
 var totalAmountByType = 0;
@@ -52,39 +52,46 @@ var totalEverExpenses = data.totalExpenses;
 var briefDailyList;
 var listProgressArray = [];
 
-var btnNewEntry = document.getElementById("addNewEntry");
-var btnClose = document.getElementById("btnClose");
+var mainBar = document.getElementById("mainBar");
+var entryFormBar = document.getElementById("entryFormBar");
+var btnNewEntry = document.getElementById("btnNewEntry");
 var btnConfirm = document.getElementById("btnConfirm");
+var btnReports = document.getElementById("btnReports");
 var btnReportByType = document.getElementsByClassName("reportButton")
-btnNewEntry.addEventListener("mousedown", openEntryForm);
-btnClose.addEventListener("mousedown", closeEntryForm);
-btnConfirm.addEventListener("mousedown", updateReport);
-for(let i = 0; i< btnReportByType.length;i++)
-{
-  btnReportByType[i].addEventListener("mousedown", onBtnReportDown);
-}
+
+btnReports.addEventListener("mouseup", openReportForm)
+btnNewEntry.addEventListener("mouseup", openEntryForm);
+btnConfirm.addEventListener("mouseup", updateReport);
+btnBack.addEventListener("mouseup", openPreviousScreen);
+
+
 var keyPad = new Calculator();
 var dropDownCategories = new AddCategories();
+
+for(let i = 0; i< btnReportByType.length;i++)
+{
+  btnReportByType[i].addEventListener("mouseup", onBtnReportDown);
+}
 
 /// end of VAR DECLARATIONS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
 //
 checkIfDateHasChanged();
+//
+openMainPage();
+
 
 //
-createPieChart(1);
-createGenericTabs();
-//
-function openEntryForm() {
-  console.log("Entry Form open true");
-  cntReportForm.style.display = "none";
-  cntEntryForm.style.display = "block";
-}
-
-//
-function createGenericTabs()
+function createGenericTabs(id = null)
 {
+  let hasDetails = true;
+  if(id!= null)
+  {
+    console.log(id);
+    briefDailyList = getListByType(null, id);
+    hasDetails = false;
+  }
   var list = document.getElementById("listCategory");
   var myNode = document.getElementById("foo");
 
@@ -126,33 +133,51 @@ function createGenericTabs()
     let bgCategory = document.createElement("div");
     let progress = document.createElement("div");
     let label = document.createElement("p");
+    let percent = document.createElement("p");
     let expenses = document.createElement("p");
+    let detailedInfo = document.createElement("button")
 
     progress.classList.add("progress");
     label.classList.add("label");
+    percent.classList.add("percent");
     expenses.classList.add("expenses");
+    detailedInfo.classList.add("detailedInfo");
+
     bgCategory.setAttribute("class", "bgCategory");
     progress.setAttribute("id", "progress");
 
     bgCategory.appendChild(progress);
-    bgCategory.appendChild(label);
+    bgCategory.appendChild(detailedInfo);
+    bgCategory.appendChild(percent);
     bgCategory.appendChild(expenses);
+    bgCategory.appendChild(label);
+    
+    detailedInfo.addEventListener('mouseup', showDetailedExpenses);
 
     list.appendChild(bgCategory, list.childNodes[0]);
     listProgressArray.push(progress);
 
-    let percent = Math.round(
+    let percentValue = Math.round(
       100 * briefDailyList[i].amount / totalAmountByType
     );
-    if (highestValue <= percent) highestValue = percent;
-    // console.log(percent);
+    if (highestValue <= percentValue) highestValue = percentValue;
+    // console.log(percentValue);
     for (let j = 0; j < categoryList.length; j++) {
       if (briefDailyList[i].categoryName === categoryList[j].categoryName) {
-        progress.innerHTML = briefDailyList[i].categoryName;
+        label.innerHTML = briefDailyList[i].categoryName;
         progress.style.backgroundColor = categoryList[j].color;
-        progress.style.width = percent + "%";
-        label.innerHTML = percent + "%";
-        expenses.innerHTML = briefDailyList[i].amount + " Ron";
+        progress.style.width = percentValue + "%";
+        percent.innerHTML = percentValue + "%";
+        expenses.innerHTML = briefDailyList[i].amount + " Ron";        
+        detailedInfo.setAttribute("id", briefDailyList[i].categoryName);
+          
+        console.log(hasDetails);
+        if(hasDetails == false)
+        {
+          detailedInfo.style.display = "none";
+          label.style.left = "0";
+          percent.style.left = "calc(100% - 170px)";
+        }
       }
     }
   }
@@ -184,12 +209,12 @@ function createPieChart(type) {
   let colors = getAllColors(briefDailyList);
   if(briefDailyList.length == 0)
   {
-    console.log("lenght = 0");
+    //console.log("lenght = 0");
     var myPiechart = new Piechart({canvas: myCanvas, data: [{categoryName:"NONE"}], colors: ["#aaa"], doughnutHoleSize: 0.8 /*, doughnutHoleSize: 0*/ });
   }
   else
   {
-    console.log("lenght > 0");
+    //console.log("lenght > 0");
     var myPiechart = new Piechart({canvas: myCanvas, data: briefDailyList, colors: colors, doughnutHoleSize: 0.8 /*, doughnutHoleSize: 0*/ });
   }
   myPiechart.draw();
@@ -205,6 +230,19 @@ function getDuplicateIndex(name)
   }
   return - 1;
 }
+function getMonthOfDetailed(month)
+{
+  if(data.detailedList.length > 0)
+  {
+    for(let i = 0;i < data.detailedList.length; i++)
+    {
+      if(data.detailedList[i].month == currentMonth)
+        return i;
+    }
+  }
+  return -1;
+}
+
 //
 function updateReport() {
 
@@ -213,15 +251,29 @@ function updateReport() {
   {
     if(objIndex == -1)
     {
-      
-    console.log(currentMonth);
-      let newEntry = {month:currentMonth, categoryName:btnCategories.innerHTML, amount:parseFloat(inputExpenses.innerHTML)}
-      data.dailyList[0].push(newEntry); 
+      //console.log(currentMonth);
+      let newDailyEntry = {month:currentMonth, categoryName:btnCategories.innerHTML, amount:parseFloat(inputExpenses.innerHTML)};
+      data.dailyList[0].push(newDailyEntry); 
     }
     else
     {        
       data.dailyList[0][objIndex].amount += parseFloat(inputExpenses.innerHTML);
     }
+
+    let newDetailedList = {categoryName:btnCategories.innerHTML, amount:parseFloat(inputExpenses.innerHTML), description:"this is a new entry"};
+
+    let detailedIndex = getMonthOfDetailed(currentMonth);
+    if( detailedIndex != -1)
+    {
+      data.detailedList[detailedIndex].list.push(newDetailedList)
+    }
+    else
+    {
+      let newMonth = {currentMonth, list:[]};
+      newMonth.list.push(newDetailedList);
+      data.detailedList.push(newMonth);
+    }
+
 
     emptyArray = false;
     closeEntryForm();   
@@ -231,20 +283,22 @@ function updateReport() {
     var myPiechart = new Piechart({canvas: myCanvas, data: briefDailyList, colors: colors, doughnutHoleSize: 0.8 /*, doughnutHoleSize: 0*/ });
     myPiechart.draw(); 
     createGenericTabs();
-    btnCategories.innerHTML = "Select Category";
-    btnCategories.style.backgroundColor = "#fff";
-    btnCategories.style.color = "#6C7A89";
   }
 }
 
 //
 function closeEntryForm() {
-  console.log("Entry Form open true");
+  //console.log("Entry Form open true");
   cntReportForm.style.display = "block";
   cntEntryForm.style.display = "none";
+  entryFormBar.style.display = "none";
+  mainBar.style.display = "block";
   inputExpenses.innerHTML = "0";
+  
+  btnCategories.innerHTML = "Select Category";
+  btnCategories.style.backgroundColor = "#46445A";
+  btnCategories.style.color = "#fff";
 }
-
 //
 function saveData() 
 {
@@ -297,10 +351,26 @@ function onBtnReportDown(evt)
 
 
 //
-function getListByType(type)
+function getListByType(type = null, id = null)
 {
   var tempData = copy(data);
-  //console.log("type = ", type);
+
+  if(id != null)
+  {
+    var value = [];
+    for(let i = 0; i< tempData.detailedList.length; i++)
+    {
+      for(let j = 0; j< tempData.detailedList[i].list.length; j++)
+      {
+        if(tempData.detailedList[i].list[j].categoryName == id)
+          value.push(tempData.detailedList[i].list[j])
+      }
+    } 
+    myCanvas.style.display = "none"; 
+    return value;
+  }
+
+  myCanvas.style.display = "block"; 
   if(type == DAY_PIE)
   {
     var value = [];
@@ -324,7 +394,7 @@ function getListByType(type)
           if(type == 1 && tempData.dailyList[i][j].month == currentMonth)
           {
             tempArr.push(tempData.dailyList[i][j])
-            console.log("month =" ,tempData.dailyList[i][j].month)
+            //console.log("month =" ,tempData.dailyList[i][j].month)
           }
           else if(type == 2)
           {
@@ -384,3 +454,80 @@ function copy(o) {
 }
 
 
+function openPreviousScreen()
+{
+
+  if(currentScreen == 1)
+    openMainPage();
+
+  if(currentScreen == 2)
+    openReportForm();
+
+  if(currentScreen == 3 && (previousScreen == 1 || previousScreen == 2))
+    openReportForm();
+
+  if(currentScreen == 3 && previousScreen == 0)
+    openMainPage();
+
+  console.log("currentScreen = ", currentScreen);
+  if(currentScreen != 2)
+  {
+    for(let i = 0; i< btnReportByType.length;i++)
+    {
+      btnReportByType[i].style.display = "block";
+    }
+  }
+  
+}
+
+function openMainPage()
+{
+  cntMainPage.style.display = "block";
+  cntReportForm.style.display = "none";  
+  cntEntryForm.style.display = "none";
+  entryFormBar.style.display = "none";
+  mainBar.style.display = "block";
+  btnBack.style.display = "none";
+  previousScreen = currentScreen;
+  currentScreen = 0;  
+}
+
+function openReportForm()
+{
+  //
+  cntReportForm.style.display = "block";
+  cntMainPage.style.display = "none";  
+  cntEntryForm.style.display = "none";
+  entryFormBar.style.display = "none";
+  mainBar.style.display = "block"; 
+  btnBack.style.display = "block";
+  previousScreen = currentScreen;
+  currentScreen = 1;
+  createPieChart(1);
+  createGenericTabs();
+  //
+}
+
+function openEntryForm() {
+  console.log("Entry Form open true");
+  cntMainPage.style.display = "none";
+  cntReportForm.style.display = "none";
+  cntEntryForm.style.display = "block";
+  mainBar.style.display = "none";
+  entryFormBar.style.display = "block";
+  btnBack.style.display = "block";   
+  previousScreen = currentScreen; 
+  currentScreen = 3;
+}
+
+function showDetailedExpenses(evt)
+{
+  createGenericTabs(evt.target.id);
+  btnBack.style.display = "block";  
+  previousScreen = currentScreen;
+  currentScreen = 2;
+  for(let i = 0; i< btnReportByType.length;i++)
+  {
+    btnReportByType[i].style.display = "none";
+  }
+}

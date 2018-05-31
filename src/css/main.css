@@ -8,16 +8,66 @@ body {
     -ms-user-select: none; /* IE10+/Edge */
     user-select: none; /* Standard */
 }
+.topMenu
+{
+    width:100%;
+    height:50px;
+    overflow: auto;
+    padding:0;    
+    margin:0;
+    left:0;
+    top:0;
+    float:right;        
+    position: fixed;
+    background-color: #4D4B5C;    
 
-.reportType {    
+}
+.btnBack
+{
+    width:50px;
+    height: 50px;
+    float:left;
+    position: relative;
+    border:none;
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
+    color:#fff;
+    font-size: 24px;
+}
+.btnSettings
+{
+    width:50px;
+    height: 50px;
+    float:right;
+    position: relative;
+    border:none;
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
+    color:#fff;
+    font-size: 24px;
+}
+.title
+{
+    float:left;
+    position: relative;
+    color:#fff;
+    font-size:24px;
+    line-height: 50px;
+    margin:0;
+    padding:0;
+    right:-14px;
+}
+.reportType
+ {    
     width:100%;
     height:auto;
     overflow: auto;
     padding:0;    
     margin:0;
     left:0;
-    top:0;
-    top:0;
+    top:50px;
     float:right;        
     position: fixed;
 }
@@ -51,23 +101,36 @@ body {
 {
     float:left;
     width:60%;
-    margin: 20% 20% 12% 20%;
+    margin: 120px 20% 0 20%;
 }
-.addNewEntry
+footer
+{
+    background-color: #4D4B5C; 
+    width:100%;
+    height:50px;
+    float:left;        
+    position: fixed;
+    top:calc(100% - 50px);
+    left:0;
+    z-index: 999;  
+}
+.btnNewEntry, .btnReports
 {
     width:50px;
     height:50px;
     background-color:#46445A;
-    text-align: center;
-    font-size:22px;
     color:#fff;
-    line-height: 50px;
-    top:calc(100% - 50px);
-    left:calc(100% - 50px);
-    z-index: 999;    
+    font-size:22px;
+    line-height: 50px;  
+    text-align: center;
     float:right;        
-    position: fixed;
-    border-radius: 0px;
+    position: relative;
+    border:none;
+    outline: none;
+}
+.btnReports
+{
+    float:left;    
 }
 
 .bgCategory
@@ -88,8 +151,10 @@ body {
     height:auto;
     overflow:auto;
     padding:0;
-    margin-bottom:60px;
+    margin:48px 0 60px 0;
     height:auto;
+    position: relative;
+    float:left;
 }
 .progress
 {
@@ -101,6 +166,23 @@ body {
     padding:auto 0;
     line-height: 50px;     
 }
+.detailedInfo
+{
+    float:left;
+    position: absolute;
+    left:0;
+    width:50px;
+    height:50px;
+    background-color: rgba(255, 255, 255, 0.295);
+    border: none;
+    outline: none;
+}
+.label
+{
+    float:left;
+    left: 44px;
+    position: absolute;
+}
 .expenses
 {
     width:140px;
@@ -109,10 +191,10 @@ body {
     text-align: right;
     z-index:99;
 }
-.label
+.percent
 {
     width:50px;
-    left:calc(100% - 180px);
+    left:calc(100% - 130px);
     float:left;
     position: absolute;
     z-index: 99;
@@ -132,17 +214,6 @@ body {
 .cntEntryForm
 {
     display: none;
-}
-.navBar
-{
-    width:100%;
-    height:50px;
-    background-color:#403E52;
-    /* margin:-60px 0 8px -8px; */
-    top:calc(100% - 50px);
-    margin:0 0 8px -8px; 
-    position:fixed;
-    z-index: 99;
 }
 .btnClose, .btnConfirm
 {

@@ -15,7 +15,7 @@ function Piechart (options){
     else 
         emptyArray = false;
 
-    console.log(" = emptyArray = " , emptyArray)
+    //console.log(" = emptyArray = " , emptyArray)
     this.draw = function(){
         
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);

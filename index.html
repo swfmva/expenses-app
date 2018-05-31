@@ -11,34 +11,45 @@
 </head>
 
 <body>
+    <div class="topMenu">
+        <button class="btnBack" id="btnBack"><</button>
+        <p class = "title">TITLE</p>
+        <!-- <button class="btnSettings">&#9784</button> -->
+    </div>
+
+    <div class="cntMainPage" id="cntMainPage">
+        <div class = "accountBalance"></div>
+        <div class = "cntEnvelopes" id = "cntEnvelopes">
+
+        </div>
+    </div>
+    <footer>
+            <div class="mainBar" id = "mainBar">
+                <button class="btnNewEntry" id="btnNewEntry">&#x2b</button>            
+                <button class="btnReports" id="btnReports">&#128202</button>
+            </div>
+            <div class="entryFormBar" id = "entryFormBar">
+                <button class="btnConfirm" id="btnConfirm">&#x2714</button>
+            </div>
+    </footer>
 
     <div class="cntReportForm" id="cntReportForm">
         <div class="reportType">
-            <div class="reportButton left">Month</div>
-            <div class="reportButton right">Total</div>
+            <div class="reportButton left" selected="selected" >Month</div>
+            <div class="reportButton right" selected="" >Total</div>
         </div>
-
         <canvas id="myCanvas"></canvas>
-
         <div class="listCategory" id="listCategory"></div>
-
-        <footer>
-            <div class="addNewEntry" id="addNewEntry">&#x2b</div>
-        </footer>
     </div>
+
     <div class="cntEntryForm" id="cntEntryForm">
-        <div class="navBar">
-            <button class="btnClose" id="btnClose">&#x25c0</button>
-            <button class="btnConfirm" id="btnConfirm">&#x2714</button>
-        </div>
         <div class="cntInput">
             <p class="inputExpenses" id="inputExpenses">0</p>
             <p class="currencyText">RON</p>
         </div>
-        <div class = "btnSelectCategory" id = "btnSelectCategory">Select Category</div>
-        <div class = "cntCategories" id = "cntCategories"></div>
+        <div class="btnSelectCategory" id="btnSelectCategory">Select Category</div>
+        <div class="cntCategories" id="cntCategories"></div>
         <div class="cntNumbers" id="cntNumbers">
-            
         </div>
     </div>
 
